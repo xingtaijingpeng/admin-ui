@@ -1,49 +1,18 @@
 <template>
-	<s-table ref="table" :columns="columns" dataUrl="system/develop/role" :params="params">
+	<s-table ref="table" :columns="columns" dataUrl="system/develop/admin" :params="params">
 		<template slot="title">
 			<a-row type="flex" justify="space-around" align="middle">
 				<a-col :span="8"><h3>管理员列表</h3></a-col>
 				<a-col :span="16" :style="{ textAlign:'right'}">
-					<a-button type="primary" icon="plus" @click="jump('/system/develop/role/create')">添加管理员</a-button>
+					<a-button type="primary" icon="plus" @click="jump('/system/develop/admin/create')">添加管理员</a-button>
 				</a-col>
 			</a-row>
 		</template>
-		<div
-				slot="filterDropdown"
-				slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters, column }"
-				style="padding: 8px"
-		>
-			<a-input
-					v-ant-ref="c => searchInput = c"
-					:placeholder="`Search ${column.dataIndex}`"
-					:value="selectedKeys[0]"
-					@change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
-					@pressEnter="confirm()"
-					style="width: 188px; margin-bottom: 8px; display: block;"
-			/>
-			<a-button
-					type="primary"
-					@click="confirm()"
-					icon="search"
-					size="small"
-					style="width: 90px; margin-right: 8px"
-			>Search</a-button
-			>
-			<a-button @click="clearFilters" size="small" style="width: 90px"
-			>Reset</a-button
-			>
-		</div>
-		<a-icon
-				slot="filterIcon"
-				slot-scope="filtered"
-				type="search"
-				:style="{ color: filtered ? '#108ee9' : undefined }"
-		/>
 		<template slot="is_work" slot-scope="data">
 			{{data == 1 ? '正常' : '停止'}}
 		</template>
 		<template slot="operation" slot-scope="data, record">
-			<a @click="jump('/system/develop/role/update/'+record.id)">编辑</a>
+			<a @click="jump('/system/develop/admin/update/'+record.id)">编辑</a>
 			<a-divider type="vertical" />
 			<a-popconfirm
 					title="Sure to delete?"
@@ -65,9 +34,9 @@
                 form: this.$form.createForm(this),
                 columns: [
                     {title: 'ID', dataIndex: 'id', sorter: true,},
-                    {title: '显示名称', dataIndex: 'title', filters: [{ text: 'Male', value: 'male' }, { text: 'Female', value: 'female' }]},
-                    {title: '角色名称', dataIndex: 'name', scopedSlots: { filterDropdown: 'filterDropdown', filterIcon: 'filterIcon'}, onFilterDropdownVisibleChange: visible => {visible && setTimeout(() => {this.searchInput.focus();}, 0);},},
-                    {title: '状态', dataIndex: 'is_work', scopedSlots: {customRender: 'is_work'},},
+                    {title: '登录账号', dataIndex: 'mobile'},
+                    {title: '笔名', dataIndex: 'name'},
+                    {title: '角色', dataIndex: 'role.title'},
                     {title: '操作', dataIndex: 'operation', width: 150, scopedSlots: { customRender: 'operation' },
                     }],
                 params: {}
@@ -97,7 +66,7 @@
             },
             onDelete(id){
                 let _this = this;
-                axios.post('system/develop/role/delete/'+id,{}).then((response) => {
+                axios.post('system/develop/admin/delete/'+id,{}).then((response) => {
 
                     if(!response.status){
                         return this.$message.error(response.message);

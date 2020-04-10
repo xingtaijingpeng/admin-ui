@@ -1,5 +1,5 @@
 <template>
-	<a-form id="components-form-demo-validate-other"
+	<a-form class="ant-pro-form-wapper"
 			:form="form"
 			v-bind="formItemLayout"
 			:layout="formLayout"
@@ -7,29 +7,66 @@
 	>
 		<a-divider orientation="left">角色添加</a-divider>
 
-		<a-form-item label="显示名称">
+		<a-form-item label="头像">
 			<a-input
-					v-decorator="['title',{initialValue: '',rules: [{ required: true, message: 'Please input your display_name!' }]}]"
-					placeholder="请输入显示名称"
+					v-decorator="['avatar',{initialValue: '',rules: [{ required: true, message: 'Please input your display_name!' }]}]"
+					placeholder="请输入登录手机号"
+					type="hidden"
+			/>
+			<a-upload
+					name="file"
+                    :headers="authHeader()"
+					listType="picture-card"
+					class="avatar-uploader"
+					:showUploadList="false"
+					:action="baseUrl('upload/image')"
+					@change="handleChange"
+			>
+				<img v-if="imageUrl" :src="imageUrl" alt="avatar" width="100%" />
+				<div v-else>
+					<a-icon :type="loading ? 'loading' : 'plus'" />
+					<div class="ant-upload-text">Upload</div>
+				</div>
+			</a-upload>
+		</a-form-item>
+
+        <a-form-item label="所属角色">
+            <a-select
+                v-decorator="['role',{initialValue: '',rules: [{ required: true, message: '请选择角色!' }] }]"
+                placeholder="请选择角色"
+            >
+                <a-select-option v-for="(value,key) in roles" :key="key" :value="value.id">
+                    {{value.title}}
+                </a-select-option>
+            </a-select>
+        </a-form-item>
+
+		<a-form-item label="登录手机号">
+			<a-input
+					v-decorator="['mobile',{initialValue: '',rules: [{ required: true, message: 'Please input your display_name!' }]}]"
+					placeholder="请输入登录手机号"
 			/>
 		</a-form-item>
 
-		<a-form-item label="角色名称">
+		<a-form-item label="管理员名称">
 			<a-input
 					v-decorator="['name',{initialValue: '',rules: [{ required: true, message: 'Please input your route_name!' }]}]"
-					placeholder="请输入角色名称"
+					placeholder="请输入管理员名称"
 			/>
 		</a-form-item>
 
-		<a-form-item label="状态">
-			<a-radio-group v-decorator="['is_work',{ initialValue: 1 }]">
-				<a-radio :value="1">正常</a-radio>
-				<a-radio :value="2">停止</a-radio>
-			</a-radio-group>
+		<a-form-item label="密码">
+			<a-input
+					v-decorator="['password',{initialValue: '',rules: [{ required: true, message: 'Please input your route_name!' }]}]"
+					placeholder="请输入密码"
+			/>
 		</a-form-item>
 
-		<a-form-item label="权限">
-			<p-tree ref="permissionTree" :selectNode="selectNode"></p-tree>
+		<a-form-item label="电子邮箱">
+			<a-input
+					v-decorator="['email',{initialValue: '',rules: [{ required: false, message: 'Please input your route_name!' }]}]"
+					placeholder="请输入电子邮箱"
+			/>
 		</a-form-item>
 
 		<a-form-item
@@ -49,7 +86,6 @@
 </template>
 
 <script>
-    import {PTree} from '@/components';
 
     export default {
         data: () => ({
@@ -58,7 +94,9 @@
                 wrapperCol: {sm: {span: 14} },
             },
             formLayout: 'horizontal',
-            selectNode: [],
+            loading: false,
+            imageUrl: '',
+            roles: []
         }),
         beforeCreate() {
             this.form = this.$form.createForm(this);
@@ -66,24 +104,43 @@
         mounted(){
             let _this = this;
 
+            //获取角色列表
+            axios.post('system/develop/role',{pageSize:999}).then((response) => {
+                if(!response.status){
+                    return this.$message.error(response.message);
+                }
+                _this.roles = response.data;
+            });
 
             if(_this.$route.params.id){
-                axios.post('system/develop/role/detail/'+_this.$route.params.id,{permission:1}).then((response) => {
+                axios.post('system/develop/admin/detail/'+_this.$route.params.id).then((response) => {
                     if(!response.status){
                         return this.$message.error(response.message);
                     }
                     _this.$nextTick(() => {
-                        _this.selectNode = response.data.permission;
-                        delete response.data.permission;
-                        _this.form.setFieldsValue(response.data);
+                        this.imageUrl = response.data.avatar;
+                        let roleId = response.data.role.id;
+                        delete response.data.role;
+                        _this.form.setFieldsValue({...response.data,password: '********',role:roleId});
                     });
                 });
             }
         },
-        components: {
-            PTree
-        },
         methods: {
+            handleChange({file}) {
+                if (file.status === 'uploading') {
+                    this.loading = true;
+                    return;
+                }
+                if (file.status === 'done') {
+                    // Get this url from response in real world.
+                    this.loading = false;
+                    this.imageUrl = file.response.data
+                    this.form.setFieldsValue({
+                        avatar: file.response.data
+                    });
+                }
+            },
             handleSubmit(e) {
                 e.preventDefault();
 
@@ -95,12 +152,12 @@
 
                     let url;
                     if(_this.$route.params.id){
-                        url = 'system/develop/role/update/'+_this.$route.params.id;
+                        url = 'system/develop/admin/update/'+_this.$route.params.id;
                     }else{
-                        url = 'system/develop/role/create';
+                        url = 'system/develop/admin/create';
                     }
 
-                    axios.post(url,{data:values,permission:_this.$refs.permissionTree.checkboxs}).then((response) => {
+                    axios.post(url,values).then((response) => {
 
                         if(!response.status){
                             return this.$message.error(response.message);

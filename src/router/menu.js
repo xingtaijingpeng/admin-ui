@@ -6,15 +6,15 @@ export default [
         component: () => import('../views/Welcome.vue'),
     },
     {
-        path: 'order', meta: { title: '订单', icon: 'pie-chart', hidden: false},
+        path: 'order', meta: { title: '订单', icon: 'file-done', hidden: false},
         component: () => import('../views/Welcome.vue'),
     },
     {
-        path: 'member', meta: { title: '用户', icon: 'pie-chart', hidden: false},
+        path: 'member', meta: { title: '用户', icon: 'user', hidden: false},
         component: () => import('../views/Welcome.vue'),
     },
     {
-        path: 'account', meta: { title: '平台', icon: 'user'},
+        path: 'account', meta: { title: '平台', icon: 'windows'},
         component: Tree(),
         children: [
             {
