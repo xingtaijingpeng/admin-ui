@@ -2,23 +2,41 @@ import { Tree } from  './tree';
 
 export default [
     {
-        path: 'index', meta: { title: '仪表盘', icon: 'pie-chart', hidden: false},
+        path: 'index', meta: { title: '工作台', icon: 'pie-chart', hidden: false},
         component: () => import('../views/Welcome.vue'),
     },
     {
-        path: 'account', meta: { title: '账户', icon: 'user'},
+        path: 'order', meta: { title: '订单', icon: 'pie-chart', hidden: false},
+        component: () => import('../views/Welcome.vue'),
+    },
+    {
+        path: 'member', meta: { title: '用户', icon: 'pie-chart', hidden: false},
+        component: () => import('../views/Welcome.vue'),
+    },
+    {
+        path: 'account', meta: { title: '平台', icon: 'user'},
         component: Tree(),
         children: [
             {
-                path: 'center', meta: { title: '个人中心'},
+                path: 'center', meta: { title: '媒体管理'},
                 component: () => import('../views/account/center/Index.vue'),
             },
             {
-                path: 'hiddens', meta: { title: '个人测试隐藏', hidden: true},
+                path: 'category', meta: { title: '分类管理'},
                 component: () => import('../views/account/center/Index.vue'),
+                children: [
+                    {
+                        path: 'article', meta: { title: '文章'},
+                        component: () => import('../views/account/settings/BaseSetting.vue'),
+                    },
+                    {
+                        path: 'video', meta: { title: '视频'},
+                        component: () => import('../views/account/settings/Security.vue'),
+                    },
+                ]
             },
             {
-                path: 'settings', meta: { title: '个人设置'},
+                path: 'settings', meta: { title: '基本设置'},
                 component: () => import('../views/account/settings/Index.vue'),
                 redirect: '/account/settings/base',
                 hideChildrenInMenu: true,
@@ -77,8 +95,23 @@ export default [
                             },
                         ]
                     },
+                    {
+                        path: 'admin', meta: { title: '管理员列表'},
+                        component: Tree(() => import('../views/system/develop/admin/Index.vue')),
+                        hideChildrenInMenu: true,
+                        children:[
+                            {
+                                path: 'create', meta: { title: '创建'},
+                                component: () => import('../views/system/develop/admin/Create.vue')
+                            },
+                            {
+                                path: 'update/:id', meta: { title: '更新'},
+                                component: () => import('../views/system/develop/admin/Create.vue')
+                            },
+                        ]
+                    },
                 ]
-            }
+            },
         ],
 
     },

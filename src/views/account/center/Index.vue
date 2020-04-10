@@ -122,8 +122,8 @@
                 ],
                 tabListNoTitle: [
                     {key: 'article', tab: '文章(8)'},
-                    {key: 'app', tab: '应用(8)'},
-                    {key: 'project', tab: '项目(8)'}
+                    {key: 'app', tab: '视频(8)'},
+                    {key: 'project', tab: '直播(8)'}
                 ],
                 noTitleKey: 'app'
             }
