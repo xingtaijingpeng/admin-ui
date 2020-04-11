@@ -100,6 +100,7 @@
         },
         data(){
             return {
+                loading: false,
                 data: [
                     {
                         title: 'Ant Design Title 1',

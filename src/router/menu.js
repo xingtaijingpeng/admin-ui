@@ -23,15 +23,37 @@ export default [
             },
             {
                 path: 'category', meta: { title: '分类管理'},
-                component: () => import('../views/account/center/Index.vue'),
+                component: Tree(),
                 children: [
                     {
                         path: 'article', meta: { title: '文章'},
-                        component: () => import('../views/account/settings/BaseSetting.vue'),
+                        component: Tree(() => import('../views/account/category/Article.vue')),
+                        hideChildrenInMenu: true,
+                        children: [
+                            {
+                                path: 'create/:guard', meta: { title: '新增分类'},
+                                component: () => import('../views/account/category/Create.vue'),
+                            },
+                            {
+                                path: 'update/:guard/:id', meta: { title: '修改分类'},
+                                component: () => import('../views/account/category/Create.vue'),
+                            },
+                        ]
                     },
                     {
                         path: 'video', meta: { title: '视频'},
-                        component: () => import('../views/account/settings/Security.vue'),
+                        component: Tree(() => import('../views/account/category/Video.vue')),
+                        hideChildrenInMenu: true,
+                        children: [
+                            {
+                                path: 'create/:guard', meta: { title: '新增分类'},
+                                component: () => import('../views/account/category/Create.vue'),
+                            },
+                            {
+                                path: 'update/:guard/:id', meta: { title: '修改分类'},
+                                component: () => import('../views/account/category/Create.vue'),
+                            },
+                        ]
                     },
                 ]
             },
