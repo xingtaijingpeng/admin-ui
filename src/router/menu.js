@@ -42,7 +42,7 @@ export default [
                 hideChildrenInMenu: true,
                 children: [
                     {
-                        path: 'base', meta: { title: '基本设置'},
+                        path: 'base', meta: { title: 'Banner/Logo'},
                         component: () => import('../views/account/settings/BaseSetting.vue'),
                     },
                     {
@@ -50,7 +50,7 @@ export default [
                         component: () => import('../views/account/settings/Security.vue'),
                     },
                     {
-                        path: 'custom', meta: { title: '个性化'},
+                        path: 'custom', meta: { title: '公司简介/版权'},
                         component: () => import('../views/account/settings/Custom.vue'),
                     },
                 ]

@@ -10,19 +10,10 @@
 							@click="userMenuClick"
 					>
 						<a-menu-item key="/account/settings/base">
-							基本设置
-						</a-menu-item>
-						<a-menu-item key="/account/settings/security">
-							安全设置
+							Banner/Logo
 						</a-menu-item>
 						<a-menu-item key="/account/settings/custom">
-							个性化
-						</a-menu-item>
-						<a-menu-item key="/account/settings/binding">
-							账户绑定
-						</a-menu-item>
-						<a-menu-item key="/account/settings/notification">
-							新消息通知
+							公司简介/版权
 						</a-menu-item>
 					</a-menu>
 				</div>

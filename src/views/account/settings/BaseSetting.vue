@@ -1,101 +1,152 @@
 <template>
 	<div class="account-settings-info-view">
-		<a-row :gutter="16">
-			<a-col :md="24" :lg="0" :style="{ minHeight: '180px' }">
-				<div class="ant-upload-preview" @click="$refs.modal.edit(1)" >
-					<a-icon type="cloud-upload-o" class="upload-icon"/>
-					<div class="mask">
-						<a-icon type="plus" />
-					</div>
-					<img :src="option.img"/>
-				</div>
-			</a-col>
-			<a-col :md="24" :lg="16">
 
-				<a-form layout="vertical">
-					<a-form-item
-							label="昵称"
-					>
-						<a-input placeholder="给自己起个名字" />
-					</a-form-item>
-					<a-form-item
-							label="Bio"
-					>
-						<a-textarea rows="4" placeholder="You are not alone."/>
-					</a-form-item>
-
-					<a-form-item
-							label="电子邮件"
-							:required="false"
-					>
-						<a-input placeholder="exp@admin.com"/>
-					</a-form-item>
-					<a-form-item
-							label="加密方式"
-							:required="false"
-					>
-						<a-select defaultValue="aes-256-cfb">
-							<a-select-option value="aes-256-cfb">aes-256-cfb</a-select-option>
-							<a-select-option value="aes-128-cfb">aes-128-cfb</a-select-option>
-							<a-select-option value="chacha20">chacha20</a-select-option>
-						</a-select>
-					</a-form-item>
-					<a-form-item
-							label="连接密码"
-							:required="false"
-					>
-						<a-input placeholder="h3gSbecd"/>
-					</a-form-item>
-					<a-form-item
-							label="登录密码"
-							:required="false"
-					>
-						<a-input placeholder="密码"/>
-					</a-form-item>
-
-					<a-form-item>
-						<a-button type="primary">提交</a-button>
-						<a-button style="margin-left: 8px">保存</a-button>
-					</a-form-item>
-				</a-form>
-
-			</a-col>
-			<a-col :xs="0" :sm="0" :md="0" :lg="8" :style="{ minHeight: '180px' }">
-				<div class="ant-upload-preview" @click="$refs.modal.edit(1)" >
-					<a-icon type="cloud-upload-o" class="upload-icon"/>
-					<div class="mask">
-						<a-icon type="plus" />
-					</div>
-					<img :src="option.img"/>
-				</div>
-			</a-col>
-
-		</a-row>
-		<avatar-modal ref="modal" @ok="setavatar"></avatar-modal>
-	</div>
+        <a-form
+                :layout="formLayout"
+                v-bind="formItemLayout"
+                @submit="handleSubmit"
+        >
+            <a-form-item
+                    label="Logo"
+            >
+                <a-upload
+                        name="file"
+                        :headers="authHeader()"
+                        listType="picture-card"
+                        class="avatar-uploader"
+                        :showUploadList="false"
+                        :action="baseUrl('upload/image')"
+                        @change="handleChangeLogo"
+                >
+                    <img v-if="imageUrl" :src="imageUrl" alt="avatar" width="100%" />
+                    <div v-else>
+                        <a-icon :type="loading ? 'loading' : 'plus'" />
+                        <div class="ant-upload-text">Upload</div>
+                    </div>
+                </a-upload>
+            </a-form-item>
+            <a-form-item
+                    label="Banner"
+            >
+                <a-upload
+                        :action="baseUrl('upload/image')"
+                        listType="picture-card"
+                        :fileList="fileList"
+                        :multiple="true"
+                        :headers="authHeader()"
+                        @preview="handlePreview"
+                        @change="handleChange"
+                >
+                    <div v-if="fileList.length < 8">
+                        <a-icon type="plus" />
+                        <div class="ant-upload-text">Upload</div>
+                    </div>
+                </a-upload>
+                <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                    <img alt="example" style="width: 100%" :src="previewImage" />
+                </a-modal>
+            </a-form-item>
+            <a-form-item :wrapper-col="{ span: 12, offset: 3 }">
+                <a-button type="primary" html-type="submit">
+                    Submit
+                </a-button>
+            </a-form-item>
+        </a-form>
+    </div>
 </template>
 
 <script>
 
-    import { AvatarModal } from '@/components'
+    function getBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    }
 
     export default {
         components: {
-            AvatarModal
+
         },
         data () {
             return {
                 // cropper
+                formItemLayout: {
+                    labelCol: {sm: {span: 3}},
+                    wrapperCol: {sm: {span: 14} },
+                },
+                loading: false,
+                imageUrl: '',
+                formLayout: 'horizontal',
                 preview: {},
                 option: {
                     img: '/img/avatar.jpg',
-                }
+                },
+                previewVisible: false,
+                previewImage: '',
+                fileList: [],
             }
         },
+        mounted(){
+            axios.post('/base/info').then((response) => {
+
+                if(!response.status){
+                    return this.$message.error(response.message);
+                }
+
+                this.imageUrl = response.data.logo
+                this.fileList = response.data.banner
+
+            });
+        },
         methods: {
-            setavatar (url) {
-                this.option.img = url
-            }
+            handleSubmit () {
+                axios.post('/base/update',{
+                    logo: this.imageUrl,
+                    banner: this.fileList.map(function ($item) {
+                        return {
+                            uid: $item['uid'],
+                            name: $item['name'],
+                            status: 'done',
+                            url: $item['url'] ? $item['url'] : $item['response'].data,
+                        };
+                    }),
+                }).then((response) => {
+
+                    if(!response.status){
+                        return this.$message.error(response.message);
+                    }
+                    return this.$message.success(response.message);
+
+                });
+            },
+            async handlePreview(file) {
+                if (!file.url && !file.preview) {
+                    file.preview = await getBase64(file.originFileObj);
+                }
+                this.previewImage = file.url || file.preview;
+                this.previewVisible = true;
+            },
+            handleCancel() {
+                this.previewVisible = false;
+            },
+            handleChange({file,fileList,event}) {
+                // window.console.log(file,fileList);
+                this.fileList = fileList;
+            },
+            handleChangeLogo({file}) {
+                if (file.status === 'uploading') {
+                    this.loading = true;
+                    return;
+                }
+                if (file.status === 'done') {
+                    // Get this url from response in real world.
+                    this.loading = false;
+                    this.imageUrl = file.response.data
+                }
+            },
         }
     }
 </script>
