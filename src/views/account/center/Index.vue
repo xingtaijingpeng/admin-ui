@@ -1,83 +1,7 @@
 <template>
 	<div class="page-header-wrapper-grid-content-main">
 		<a-row :gutter="24">
-			<a-col :md="24" :lg="7">
-				<a-card :bordered="false">
-					<div class="account-center-avatarHolder">
-						<div class="avatar">
-							<img :src="avatar">
-						</div>
-						<div class="username">{{ name }}</div>
-						<div class="bio">海纳百川，有容乃大</div>
-					</div>
-					<div class="account-center-detail">
-						<p><i class="title"></i>交互专家</p>
-						<p><i class="group"></i>蚂蚁金服－某某某事业群－某某平台部－某某技术部－UED</p>
-						<p>
-							<i class="address"></i>
-							<span>浙江省</span>
-							<span>杭州市</span>
-						</p>
-					</div>
-					<a-divider/>
-
-					<div class="account-center-tags">
-						<div class="tagsTitle">标签</div>
-						<div>
-							<template v-for="(tag, index) in tags">
-								<a-tag
-										:key="tag"
-										:closable="index !== 0"
-										:afterClose="() => handleTagClose(tag)"
-								>
-									<ellipsis :length="16" tooltip>
-										{{ tag }}
-									</ellipsis>
-								</a-tag>
-							</template>
-							<a-input
-									v-if="tagInputVisible"
-									ref="tagInput"
-									type="text"
-									size="small"
-									:style="{ width: '78px' }"
-									:value="tagInputValue"
-									@change="(e) => {
-                                        this.tagInputValue = e.target.value
-                                    }"
-									@blur="handleTagInputConfirm"
-									@keyup.enter="handleTagInputConfirm"
-							/>
-							<a-tag v-else @click="() => {
-                                  this.tagInputVisible = true
-                                  this.$nextTick(() => {
-                                    this.$refs.tagInput.focus()
-                                  })
-                            }" style="background: #fff; borderStyle: dashed;">
-								<a-icon type="plus"/>New Tag
-							</a-tag>
-						</div>
-					</div>
-					<a-divider :dashed="true"/>
-
-					<div class="account-center-team">
-						<div class="teamTitle">团队</div>
-						<a-spin :spinning="teamSpinning">
-							<div class="members">
-								<a-row>
-									<a-col :span="12" v-for="(item, index) in teams" :key="index">
-										<a>
-											<a-avatar size="small" :src="item.avatar"/>
-											<span class="member">{{ item.name }}</span>
-										</a>
-									</a-col>
-								</a-row>
-							</div>
-						</a-spin>
-					</div>
-				</a-card>
-			</a-col>
-			<a-col :md="24" :lg="17">
+			<a-col span="24">
 				<a-card
 						style="width:100%"
 						:bordered="false"
@@ -85,10 +9,11 @@
 						:activeTabKey="noTitleKey"
 						@tabChange="key => handleTabChange(key, 'noTitleKey')"
 				>
-					<article-page v-if="noTitleKey === 'article'"></article-page>
+                    <article-page v-if="noTitleKey === 'article'"></article-page>
 					<app-page v-else-if="noTitleKey === 'app'"></app-page>
 					<project-page v-else-if="noTitleKey === 'project'"></project-page>
-				</a-card>
+                    <a-button type="primary" slot="tabBarExtraContent">Primary</a-button>
+                </a-card>
 			</a-col>
 		</a-row>
 	</div>
@@ -97,7 +22,6 @@
 <script>
     import { AppPage, ArticlePage, ProjectPage } from './page'
     import { mapState } from 'vuex'
-    import { Ellipsis } from '@/components'
 
     export default {
         name: "Index",
@@ -105,27 +29,18 @@
             AppPage,
             ArticlePage,
             ProjectPage,
-            Ellipsis
         },
         data(){
             return {
                 tagInputVisible: false,
                 tagInputValue: '',
-                tags: ['不删除的标签','很有想法的很有想法的很有想法的很有想法的很有想法的很有想法的很有想法的', '专注设计', '辣~', '大长腿', '川妹子', '海纳百川'],
                 teamSpinning: true,
-                teams: [
-                    {id: 1, name: '科学搬砖组', avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png'},
-                    {id: 2, name: '程序员日常', avatar: 'https://gw.alipayobjects.com/zos/rmsportal/cnrhVkzwxjPwAaCfPbdc.png'},
-                    {id: 1, name: '设计天团', avatar: 'https://gw.alipayobjects.com/zos/rmsportal/gaOngJwsRYRaVAuXXcmB.png'},
-                    {id: 1, name: '中二少女团', avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ubnKSIfAJTxIgXOKlciN.png'},
-                    {id: 1, name: '骗你学计算机', avatar: 'https://gw.alipayobjects.com/zos/rmsportal/WhxKECPNujWoWEFNdnJE.png'}
-                ],
                 tabListNoTitle: [
-                    {key: 'article', tab: '文章(8)'},
-                    {key: 'app', tab: '视频(8)'},
-                    {key: 'project', tab: '直播(8)'}
+                    {key: 'article', tab: '文章'},
+                    {key: 'project', tab: '视频'},
+                    {key: 'app', tab: '直播'},
                 ],
-                noTitleKey: 'app'
+                noTitleKey: 'article'
             }
         },
         computed: {
@@ -141,23 +56,6 @@
             handleTabChange (key, type) {
                 this[type] = key
             },
-            handleTagClose (removeTag) {
-                const tags = this.tags.filter(tag => tag !== removeTag)
-                this.tags = tags
-            },
-            handleTagInputConfirm () {
-                const inputValue = this.tagInputValue
-                let tags = this.tags
-                if (inputValue && !tags.includes(inputValue)) {
-                    tags = [...tags, inputValue]
-                }
-
-                Object.assign(this, {
-                    tags,
-                    tagInputVisible: false,
-                    tagInputValue: ''
-                })
-            }
         }
     }
 </script>
