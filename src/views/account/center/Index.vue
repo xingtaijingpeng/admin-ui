@@ -12,7 +12,7 @@
                     <article-page v-if="noTitleKey === 'article'"></article-page>
 					<app-page v-else-if="noTitleKey === 'app'"></app-page>
 					<project-page v-else-if="noTitleKey === 'project'"></project-page>
-                    <a-button type="primary" slot="tabBarExtraContent">Primary</a-button>
+                    <a-button type="primary" v-if="btnview" slot="tabBarExtraContent" @click="addItem">{{btnview}}</a-button>
                 </a-card>
 			</a-col>
 		</a-row>
@@ -40,7 +40,8 @@
                     {key: 'project', tab: '视频'},
                     {key: 'app', tab: '直播'},
                 ],
-                noTitleKey: 'article'
+                noTitleKey: 'article',
+                btnview: '添加文章'
             }
         },
         computed: {
@@ -54,8 +55,22 @@
         },
         methods: {
             handleTabChange (key, type) {
+                if(key == 'article'){
+                    this.btnview = '添加文章';
+                }else if(key == 'project'){
+                    this.btnview = '添加视频';
+                }else {
+                    this.btnview = '';
+                }
                 this[type] = key
             },
+            addItem(){
+                if(this.noTitleKey == 'article'){
+                    this.$router.push('/')
+                }else{
+                    this.$router.push('/')
+                }
+            }
         }
     }
 </script>
