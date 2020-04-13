@@ -6,29 +6,29 @@
                     <a-avatar :src="avatar" />
                 </div>
                 <div class="headerContent">
-                    <div class="title">早安，Serati Ma<span class="welcome-text">，祝你开心每一天！</span></div>
-                    <div>前端工程师 | 蚂蚁金服 - 某某某事业群 - VUE平台</div>
+                    <div class="title">您好，{{$store.state.user.name}}<span class="welcome-text">，</span></div>
+                    <div>祝你开心每一天！</div>
                 </div>
                 <div class="extra">
                     <a-row class="more-info">
                         <a-col :span="8">
                             <div class="head-info center">
-                                <span>项目</span>
-                                <p>56</p>
+                                <span>文章</span>
+                                <p>{{articleCount}}</p>
                                 <em/>
                             </div>
                         </a-col>
                         <a-col :span="8">
                             <div class="head-info center">
-                                <span>团队排名</span>
-                                <p>8/24</p>
+                                <span>视频</span>
+                                <p>{{videoCount}}</p>
                                 <em/>
                             </div>
                         </a-col>
                         <a-col :span="8">
                             <div class="head-info center">
-                                <span>项目数</span>
-                                <p>2,223</p>
+                                <span>直播</span>
+                                <p>{{zhiboCount}}</p>
                             </div>
                         </a-col>
                     </a-row>
@@ -56,12 +56,12 @@
                                             <a>{{ item.title }}</a>
                                         </div>
                                         <div slot="description" class="card-description">
-                                            {{ item.description }}
+                                            {{ item.category }}
                                         </div>
                                     </a-card-meta>
                                     <div class="project-item">
-                                        <a href="/#/">科学搬砖组</a>
-                                        <span class="datetime">9小时前</span>
+                                        <a href="/#/">{{item.user.name}}</a>
+                                        <span class="datetime">{{item.created_at | fromNow}}</span>
                                     </div>
                                 </a-card>
                             </a-card-grid>
@@ -73,12 +73,12 @@
                         <a-list itemLayout="horizontal" :dataSource="data">
                             <a-list-item slot="renderItem" slot-scope="item">
                                 <a-list-item-meta
-                                        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                        :description="item.description"
                                 >
                                     <a slot="title">{{item.title}}</a>
                                     <a-avatar
                                             slot="avatar"
-                                            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                                            :src="item.cover"
                                     />
                                 </a-list-item-meta>
                             </a-list-item>
@@ -92,72 +92,59 @@
 </template>
 
 <script>
+    import moment from 'moment'
 
     export default {
         name: "Welcome",
-        components: {
-
-        },
         data(){
             return {
                 loading: false,
-                data: [
-                    {
-                        title: 'Ant Design Title 1',
-                    },
-                    {
-                        title: 'Ant Design Title 2',
-                    },
-                    {
-                        title: 'Ant Design Title 3',
-                    },
-                    {
-                        title: 'Ant Design Title 4',
-                    },
-                ],
+                articleCount: 0,
+                videoCount: 0,
+                zhiboCount: 0,
+                data: [],
                 title: '这里是标题',
-                logo: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-                avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-                projects: [
-                    {
-                        title:"Alipay",
-                        cover:"https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png",
-                        description:"那是一种内在的东西，他们到达不了，也无法触及的",
-                        member:"科学搬砖组",
-                    },
-                    {
-                        title:"Alipay",
-                        cover:"https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png",
-                        description:"那是一种内在的东西，他们到达不了，也无法触及的",
-                        member:"科学搬砖组",
-                    },
-                    {
-                        title:"Alipay",
-                        cover:"https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png",
-                        description:"那是一种内在的东西，他们到达不了，也无法触及的",
-                        member:"科学搬砖组",
-                    },
-                    {
-                        title:"Alipay",
-                        cover:"https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png",
-                        description:"那是一种内在的东西，他们到达不了，也无法触及的",
-                        member:"科学搬砖组",
-                    },
-                    {
-                        title:"Alipay",
-                        cover:"https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png",
-                        description:"那是一种内在的东西，他们到达不了，也无法触及的",
-                        member:"科学搬砖组",
-                    },
-                    {
-                        title:"Alipay",
-                        cover:"https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png",
-                        description:"那是一种内在的东西，他们到达不了，也无法触及的",
-                        member:"科学搬砖组",
-                    },
-                ]
+                projects: []
             }
         },
+        filters: {
+            fromNow (date) {
+                return moment(date).fromNow()
+            }
+        },
+		computed: {
+            avatar(){
+                return this.$store.state.user.avatar
+			}
+		},
+		mounted(){
+            axios.post('article/index',{
+                guard: 'article',
+                pageSize: 6
+            }).then((response) => {
+
+                if(!response.status){
+                    return this.$message.error(response.message);
+                }
+
+                this.articleCount = response.meta.total;
+                this.data = response.data
+
+            });
+            axios.post('article/index',{
+                guard: 'video',
+                pageSize: 6
+            }).then((response) => {
+
+                if(!response.status){
+                    return this.$message.error(response.message);
+                }
+
+                this.videoCount = response.meta.total;
+                this.projects = response.data
+
+            });
+		},
         methods:{
 
         }
