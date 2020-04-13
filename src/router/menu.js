@@ -30,6 +30,14 @@ export default [
                         path: 'article/update/:id', meta: { title: '修改文章'},
                         component: () => import('../views/account/center/page/AricleCreate.vue'),
                     },
+                    {
+                        path: 'video/create', meta: { title: '新增视频'},
+                        component: () => import('../views/account/center/page/VideoCreate.vue'),
+                    },
+                    {
+                        path: 'video/update/:id', meta: { title: '修改视频'},
+                        component: () => import('../views/account/center/page/VideoCreate.vue'),
+                    },
                 ]
             },
             {
