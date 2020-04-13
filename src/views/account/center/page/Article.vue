@@ -9,22 +9,22 @@
 	>
 		<a-list-item :key="item.id" slot="renderItem" slot-scope="item">
 			<template slot="actions">
-                <span>
-                  <a-icon type="star-o" style="margin-right: 8px" />
+                <span @click="jump('/account/center/article/update/'+item.id)">
+                  <a-icon type="edit" style="margin-right: 8px" />
                   编辑
                 </span>
-				<span>
-                  <a-icon type="like-o" style="margin-right: 8px" />
-                  删除
-                </span>
+				<a-popconfirm placement="top" okText="Yes" cancelText="No" @confirm="deleteart(item.id)">
+					<template slot="title">
+						<p>是否删除？</p>
+					</template>
+					<a-icon type="delete" style="margin-right: 8px" />删除
+				</a-popconfirm>
 			</template>
 			<a-list-item-meta>
-				<a slot="title" href="https://vue.ant.design/">{{ item.title }}</a>
+				<a slot="title">{{ item.title }}</a>
 				<template slot="description">
                       <span>
-                        <a-tag>Ant Design</a-tag>
-                        <a-tag>设计语言</a-tag>
-                        <a-tag>蚂蚁金服</a-tag>
+                        <a-tag>{{ item.category }}</a-tag>
                       </span>
 				</template>
 			</a-list-item-meta>
@@ -35,9 +35,9 @@
 					</slot>
 				</div>
 				<div class="extra">
-					<a-avatar :src="item.avatar" size="small" />
-					<a :href="item.href">{{ item.owner }}</a> 发布于
-					<em>{{ item.updatedAt}}</em>
+					<a-avatar :src="item.user.avatar" size="small" />
+					<a :href="item.href">{{ item.user.name }}</a> 发布于
+					<em>{{ item.created_at}}</em>
 				</div>
 			</div>
 		</a-list-item>
@@ -60,43 +60,38 @@
                     pageSize: 10,
                 },
                 loading: true,
-                data: [
-                    {
-                        "id":1,
-                        "avatar":"https://gw.alipayobjects.com/zos/rmsportal/dURIMkkrRFpPgTuzkwnB.png",
-                        "owner":"周星星",
-                        "description":"在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。",
-                        "title":"Alipay",
-                        "updatedAt":"1981-01-21 22:47:23",
-                        "cover":"https://gw.alipayobjects.com/zos/rmsportal/uMfMFlvUuceEyPpotzlq.png"
-                    },
-                    {
-                        "id":2,
-                        "avatar":"https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png",
-                        "owner":"林东东",
-                        "description":"在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。",
-                        "title":"Angular",
-                        "updatedAt":"1998-07-03 15:08:45",
-                        "cover":"https://gw.alipayobjects.com/zos/rmsportal/iZBVOIhGJiAnhplqjvZW.png"
-                    },
-                ]
+                data: []
             }
         },
         mounted () {
-            //获取文章列表
-            axios.post('/article/index',{
-                guard: 'article'
-            }).then((response) => {
-
-                if(!response.status){
-                    return this.$message.error(response.message);
-                }
-                this.loading = false
-
-            });
+            this.init();
         },
         methods: {
+            deleteart(id){
+                axios.post('/article/delete/'+id).then((response) => {
 
+                    if(!response.status){
+                        return this.$message.error(response.message);
+                    }
+                    this.init();
+
+                });
+			},
+			init(){
+                //获取文章列表
+                axios.post('/article/index',{
+                    guard: 'article',
+                    pageSize: 999
+                }).then((response) => {
+
+                    if(!response.status){
+                        return this.$message.error(response.message);
+                    }
+                    this.loading = false;
+                    this.data = response.data;
+
+                });
+			}
         }
     }
 </script>

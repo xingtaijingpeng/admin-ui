@@ -10,12 +10,9 @@
 
 		<a-form-item label="所属分类">
 			<a-select
-					v-decorator="['parent_id',{initialValue: 0}]"
+					v-decorator="['category_id',{rules: [{ required: true, message: 'Please input your display_name!' }]}]"
 					placeholder="请选择所属分类"
 			>
-				<a-select-option :value="0">
-					请选择分类
-				</a-select-option>
 				<a-select-option v-for="(item,index) in menuTree" :key="index" :value="item.id">
 					|<span v-for="(n,i) in item.level" :key="i"> -- </span>{{item.name}}
 				</a-select-option>
@@ -31,7 +28,7 @@
 
 		<a-form-item label="描述">
 			<a-input
-					v-decorator="['name',{initialValue: '',rules: [{ required: true, message: 'Please input your route_name!' }]}]"
+					v-decorator="['description',{initialValue: '',rules: [{ required: true, message: 'Please input your route_name!' }]}]"
 					placeholder="请输入权限名称"
 			/>
 		</a-form-item>
@@ -39,6 +36,10 @@
 		<a-form-item
 				label="缩略图"
 		>
+			<a-input
+					v-decorator="['cover']"
+					type="hidden"
+			/>
 			<a-upload
 					name="file"
 					:headers="authHeader()"
@@ -57,21 +58,18 @@
 		</a-form-item>
 
 		<a-form-item label="热门">
-			<a-radio-group v-decorator="['is_menu',{ initialValue: 1 }]">
+			<a-radio-group v-decorator="['hot',{ initialValue: 1 }]">
 				<a-radio :value="1">是</a-radio>
 				<a-radio :value="2">否</a-radio>
 			</a-radio-group>
 		</a-form-item>
 
 		<a-form-item label="文章内容">
-			<ueditor @ready="editorReady" ref="ue" :value="defaultMSG" :ueditorConfig="config"></ueditor>
-		</a-form-item>
-
-		<a-form-item label="排序">
-			<a-input-number v-decorator="['sorts', { initialValue: 0 }]" :min="0" :max="99999999" style="width: 100px" />
-			<span class="ant-form-text">
-                (0 ~ 99999999) 值越大越靠前
-            </span>
+			<a-input
+					v-decorator="['content']"
+					type="hidden"
+			/>
+			<ueditor @ready="editorReady" ref="ue" :value="defaultMSG" :ueditorConfig="config" style="line-height: normal !important;"></ueditor>
 		</a-form-item>
 
 		<a-form-item
@@ -124,11 +122,15 @@
             });
 
             if(_this.$route.params.id){
-                axios.post('system/develop/permission/detail/'+_this.$route.params.id,{}).then((response) => {
+                axios.post('article/detail/'+_this.$route.params.id,{}).then((response) => {
                     if(!response.status){
                         return this.$message.error(response.message);
                     }
                     _this.$nextTick(() => {
+                        setTimeout(() => {
+                            _this.defaultMSG = response.data.content
+                        },1000)
+                        _this.imageUrl = response.data.cover
                         _this.form.setFieldsValue(response.data);
                     });
                 });
@@ -144,12 +146,13 @@
                     // Get this url from response in real world.
                     this.loading = false;
                     this.imageUrl = file.response.data
+                    this.form.setFieldsValue({cover:file.response.data});
                 }
             },
             editorReady(instance) {
                 // instance.setContent('公司简介');
                 instance.addListener('contentChange', () => {
-                    this.content = instance.getContent();
+                    this.form.setFieldsValue({content:instance.getContent()});
                 });
             },
             handleSubmit(e) {
@@ -163,12 +166,12 @@
 
                     let url;
                     if(_this.$route.params.id){
-                        url = 'system/develop/permission/update/'+_this.$route.params.id;
+                        url = 'article/update/'+_this.$route.params.id;
                     }else{
-                        url = 'system/develop/permission/create';
+                        url = 'article/create';
                     }
 
-                    axios.post(url,{data:values}).then((response) => {
+                    axios.post(url,values).then((response) => {
 
                         if(!response.status){
                             return this.$message.error(response.message);
