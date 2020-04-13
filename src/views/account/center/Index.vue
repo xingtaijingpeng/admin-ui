@@ -66,9 +66,9 @@
             },
             addItem(){
                 if(this.noTitleKey == 'article'){
-                    this.$router.push('/')
+                    this.$router.push('/account/center/article/create')
                 }else{
-                    this.$router.push('/')
+                    this.$router.push('/account/center/video/create')
                 }
             }
         }

@@ -19,7 +19,18 @@ export default [
         children: [
             {
                 path: 'center', meta: { title: '媒体管理'},
-                component: () => import('../views/account/center/Index.vue'),
+                component: Tree(() => import('../views/account/center/Index.vue')),
+                hideChildrenInMenu: true,
+                children: [
+                    {
+                        path: 'article/create', meta: { title: '新增文章'},
+                        component: () => import('../views/account/center/page/AricleCreate.vue'),
+                    },
+                    {
+                        path: 'article/update/:id', meta: { title: '修改文章'},
+                        component: () => import('../views/account/center/page/AricleCreate.vue'),
+                    },
+                ]
             },
             {
                 path: 'category', meta: { title: '分类管理'},
