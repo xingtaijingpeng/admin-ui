@@ -46,7 +46,6 @@
                             :bordered="false"
                             title="最新课程"
                             :body-style="{ padding: 0 }">
-                        <a slot="extra">全部课程</a>
                         <div>
                             <a-card-grid class="project-card-grid" :key="i" v-for="(item, i) in projects">
                                 <a-card :bordered="false" :body-style="{ padding: 0 }">
@@ -69,7 +68,6 @@
                     </a-card>
 
                     <a-card :loading="loading" title="最新文章" :bordered="false">
-                        <a slot="extra">全部文章</a>
                         <a-list itemLayout="horizontal" :dataSource="data">
                             <a-list-item slot="renderItem" slot-scope="item">
                                 <a-list-item-meta
