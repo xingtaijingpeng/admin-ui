@@ -20,16 +20,16 @@
 			<br /><br/>
 
 			<a-input-group compact>
-				<a-input size="large" style="width: 60%" v-model="reset_code" defaultValue="验证码" />
-				<a-button size="large" style="width: 40%" type="primary">发送短信</a-button>
+				<a-input size="large" style="width: 60%" v-model="reset_code" placeholder="验证码" />
+				<a-button size="large" style="width: 40%" type="primary" @click="sendSme">{{smstips}}</a-button>
 			</a-input-group>
 			<br/>
 
 			<div class="submit-btn">
-				<button>找回密码</button>
+				<button @click="forget">找回密码</button>
 			</div>
 			<div class="connect">
-				<p class="hd" align="center">
+				<p class="hd" align="center" v-if="false">
 					<a>《 隐私条款 》</a>
 				</p>
 			</div>
@@ -49,7 +49,47 @@
                 reset_pwd: '',
                 reset_pwd_confirm: '',
                 reset_code: '',
+                smstips: '发送短信',
             };
         },
+		methods:{
+            forget(){
+                axios.post('forget',{
+					'mobile': this.user_name,
+					'password': this.reset_pwd,
+					'password_confirmation': this.reset_pwd_confirm,
+					'code': this.reset_code,
+                }).then((response) => {
+
+                    if(!response.status){
+                        return this.$message.error(response.message);
+                    }
+                    sessionStorage.setItem('access_token',response.data.token)
+                    this.jump('/')
+
+                });
+            },
+			sendSme(){
+                axios.post('sms',{
+					'mobile': this.user_name,
+                }).then((response) => {
+
+                    if(!response.status){
+                        return this.$message.error(response.message);
+                    }
+                    let times = 60;
+                    let timer = setInterval(()=>{
+                        this.smstips = times;
+                        times--;
+
+                        if(times <= 0){
+                            clearInterval(timer)
+                            this.smstips = '发送短信';
+                        }
+					},1000);
+
+                });
+			}
+		}
     }
 </script>

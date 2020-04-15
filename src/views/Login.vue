@@ -23,7 +23,7 @@
 				</p>
 			</div>
 		</div>
-		<div class="bottom-link">
+		<div class="bottom-link" v-if="false">
 			还没有帐号?<a @click="jump('/user/register')">马上注册</a>
 		</div>
 	</div>
