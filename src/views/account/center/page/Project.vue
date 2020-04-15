@@ -3,7 +3,7 @@
 		<a-list
 				:loading="loading"
 				:data-source="data"
-				:grid="{ gutter: 24, xxl: 3, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }"
+				:grid="{ gutter: 24, xxl: 4, xl: 4, lg: 3, md: 3, sm: 2, xs: 1 }"
 				:pagination="pagination"
 		>
 			<a-list-item slot="renderItem" slot-scope="item">
