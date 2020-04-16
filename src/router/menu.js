@@ -11,7 +11,7 @@ export default [
     },
     {
         path: 'member', meta: { title: '用户', icon: 'user', hidden: false},
-        component: () => import('../views/Welcome.vue'),
+        component: () => import('../views/member/Index.vue'),
     },
     {
         path: 'account', meta: { title: '平台', icon: 'windows'},
