@@ -7,7 +7,7 @@ export default [
     },
     {
         path: 'order', meta: { title: '订单', icon: 'file-done', hidden: false},
-        component: () => import('../views/Welcome.vue'),
+        component: () => import('../views/order/Index.vue'),
     },
     {
         path: 'member', meta: { title: '用户', icon: 'user', hidden: false},
