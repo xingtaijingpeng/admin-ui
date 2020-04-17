@@ -11,7 +11,7 @@
         props: {
             title: {
                 type: String,
-                default: 'Zhiwei Duan',
+                default: 'XT Jing Peng',
                 required: false
             },
             showTitle: {
