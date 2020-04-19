@@ -14,6 +14,21 @@ export default [
         component: () => import('../views/member/Index.vue'),
     },
     {
+        path: 'teacher', meta: { title: '师资', icon: 'edit', hidden: false},
+        component: Tree(() => import('../views/teacher/Index')),
+        hideChildrenInMenu: true,
+        children: [
+            {
+                path: 'create', meta: { title: '添加师资'},
+                component: () => import('../views/teacher/Create.vue'),
+            },
+            {
+                path: 'update/:id', meta: { title: '修改师资'},
+                component: () => import('../views/teacher/Create.vue'),
+            },
+        ]
+    },
+    {
         path: 'account', meta: { title: '平台', icon: 'windows'},
         component: Tree(),
         children: [
