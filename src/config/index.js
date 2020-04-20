@@ -17,7 +17,7 @@ export default {
     FIXSIDEBAR      : false,
     AUTOHIDEHEADER  : false,
     COLORWEAK       : false,
-    MULTITAB        : true,
+    MULTITAB        : false,
     PRODUCTION      : process.env.NODE_ENV === 'production',
     LSOPTIONS       :{
                           namespace : 'pro__',   // key prefix
