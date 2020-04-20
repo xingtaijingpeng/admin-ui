@@ -59,7 +59,7 @@
                                         </div>
                                     </a-card-meta>
                                     <div class="project-item">
-                                        <a href="/#/">{{item.user.name}}</a>
+                                        <a>{{item.user.name}}</a>
                                         <span class="datetime">{{item.created_at | fromNow}}</span>
                                     </div>
                                 </a-card>

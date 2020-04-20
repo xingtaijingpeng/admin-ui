@@ -53,6 +53,18 @@ export default [
                         path: 'video/update/:id', meta: { title: '修改视频'},
                         component: () => import('../views/account/center/page/VideoCreate.vue'),
                     },
+                    {
+                        path: 'comments/:id', meta: { title: '评论列表'},
+                        component: () => import('../views/account/center/page/Comments'),
+                    },
+                    {
+                        path: 'comments/:id/create', meta: { title: '添加评论'},
+                        component: () => import('../views/account/center/page/CommentCreate'),
+                    },
+                    {
+                        path: 'comments/:id/update/:sid', meta: { title: '更新评论'},
+                        component: () => import('../views/account/center/page/CommentCreate'),
+                    },
                 ]
             },
             {

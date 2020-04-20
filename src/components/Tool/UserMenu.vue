@@ -5,17 +5,12 @@
               <a-icon type="question-circle-o"></a-icon>
             </span>
 		</a>
-		<notice-icon class="action" :theme="theme"></notice-icon>
 		<a-dropdown placement="bottomRight" :trigger="['click','hover']">
             <span class="action">
               <a-avatar class="avatar" size="small" :src="avatar"/>
               <span :class="theme">{{ name }} <a-icon type="down" /></span>
             </span>
 			<a-menu slot="overlay" style="width: 150px">
-				<a-menu-item key="11"><a-icon type="user" />个人中心</a-menu-item>
-				<a-menu-item key="21"><a-icon type="setting" />账户设置</a-menu-item>
-				<a-menu-item key="41" disabled><a-icon type="setting" />禁用</a-menu-item>
-				<a-menu-divider/>
 				<a-menu-item key="31" @click="logout"><a-icon type="logout"/>退出登录</a-menu-item>
 			</a-menu>
 		</a-dropdown>
@@ -23,7 +18,6 @@
 </template>
 
 <script>
-    import NoticeIcon from '@/components/NoticeIcon'
     import { mapState } from 'vuex'
 
     export default {
@@ -40,9 +34,6 @@
                 required: false,
                 default: 'dark'
             }
-        },
-        components: {
-            NoticeIcon
         },
         created (){
             this.$store.dispatch('user/GetInfo',this)

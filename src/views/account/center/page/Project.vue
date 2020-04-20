@@ -26,6 +26,7 @@
 								</template>
 								<a-icon type="delete" style="margin-right: 8px" />删除
 							</a-popconfirm>
+							<span @click="jump('/account/center/comments/'+item.id)"><a-icon type="notification" style="margin-right: 8px" />评论管理</span>
 						</div>
 					</div>
 				</a-card>
