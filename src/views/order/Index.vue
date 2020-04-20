@@ -1,5 +1,5 @@
 <template>
-	<s-table ref="table" :columns="columns" dataUrl="orders">
+	<s-table ref="table" :columns="columns" dataUrl="orders" :params="params">
 		<template slot="title">
 			<a-row type="flex" justify="space-around" align="middle">
 				<a-col :span="8">订单列表</a-col>
@@ -32,6 +32,22 @@
                 ],
             }
         },
+		created(){
+
+		},
+		computed: {
+            params(){
+                let id = this.$route.params.id
+                if(id>0){
+                    return {
+                        user_id: id
+                    }
+
+                }else{
+                    return {};
+				}
+			}
+		},
         methods: {
             onDelete(id){
                 let _this = this;

@@ -6,12 +6,19 @@ export default [
         component: () => import('../views/Welcome.vue'),
     },
     {
-        path: 'order', meta: { title: '订单', icon: 'file-done', hidden: false},
-        component: () => import('../views/order/Index.vue'),
+        path: 'orders', meta: { title: '订单', icon: 'file-done', hidden: false},
+        component: Tree(() => import('../views/order/Index.vue')),
+        hideChildrenInMenu: true,
+        children: [
+            {
+                path: ':id?', meta: { title: '订单'},
+                component: () => import('../views/order/Index.vue'),
+            }
+        ]
     },
     {
         path: 'member', meta: { title: '用户', icon: 'user', hidden: false},
-        component: () => import('../views/member/Index.vue'),
+        component: () => import('../views/member/Index'),
     },
     {
         path: 'teacher', meta: { title: '师资', icon: 'edit', hidden: false},

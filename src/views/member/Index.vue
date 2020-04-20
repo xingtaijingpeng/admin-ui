@@ -8,8 +8,8 @@
 			</a-row>
 		</template>
 
-		<template slot="operation">
-			<a @click="jump('/order')">已购买课程</a>
+		<template slot="operation" slot-scope="data, record">
+			<a @click="jump('/orders/'+record.id)">已购买课程</a>
 		</template>
 	</s-table>
 </template>
