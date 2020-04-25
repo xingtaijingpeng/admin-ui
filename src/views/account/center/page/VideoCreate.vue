@@ -19,6 +19,17 @@
 			</a-select>
 		</a-form-item>
 
+		<a-form-item label="所属讲师">
+			<a-select
+					v-decorator="['teacher_id',{rules: [{ required: true, message: 'Please input your display_name!' }]}]"
+					placeholder="请选择讲师"
+			>
+				<a-select-option v-for="(item,index) in teacher" :key="index" :value="item.id">
+					{{item.title}}
+				</a-select-option>
+			</a-select>
+		</a-form-item>
+
 		<a-form-item label="标题">
 			<a-input
 					v-decorator="['title',{initialValue: '',rules: [{ required: true, message: 'Please input your display_name!' }]}]"
@@ -116,6 +127,7 @@
             loading: false,
             imageUrl: '',
             menuTree: [],
+            teacher: [],
         }),
         beforeCreate() {
             this.form = this.$form.createForm(this);
@@ -128,6 +140,18 @@
                     return this.$message.error(response.message);
                 }
                 _this.menuTree = response.data;
+            });
+            //获取老师列表
+            axios.post('/article/index',{
+                guard: 'teacher',
+                pageSize: 999
+            }).then((response) => {
+
+                if(!response.status){
+                    return this.$message.error(response.message);
+                }
+                this.teacher = response.data;
+
             });
 
             if(_this.$route.params.id){

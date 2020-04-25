@@ -19,7 +19,7 @@
 			</a-select>
 		</a-form-item>
 
-		<a-form-item label="标题">
+		<a-form-item label="标题1">
 			<a-input
 					v-decorator="['title',{initialValue: '',rules: [{ required: true, message: 'Please input your display_name!' }]}]"
 					placeholder="请输入显示名称"
