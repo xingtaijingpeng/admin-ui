@@ -1,5 +1,5 @@
 <template>
-	<div id="wrapper" :style="{  backgroundImage: 'url(/img/bg1.jpg)'}">
+	<div id="wrapper" :style="{  backgroundImage: 'url(img/bg1.jpg)'}">
 		<div class="container">
 			<div title="返回首页" class="logo"></div>
 			<transition name="bounce" mode="out-in">
