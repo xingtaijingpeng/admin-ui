@@ -24,6 +24,7 @@
                         <div class="ant-upload-text">Upload</div>
                     </div>
                 </a-upload>
+                <span style="color: red;">建议尺寸 70*70</span>
             </a-form-item>
             <a-form-item
                     label="Banner"
@@ -45,6 +46,7 @@
                 <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
                     <img alt="example" style="width: 100%" :src="previewImage" />
                 </a-modal>
+                <span style="color: red;">建议尺寸 1920*676</span>
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 12, offset: 3 }">
                 <a-button type="primary" html-type="submit">
