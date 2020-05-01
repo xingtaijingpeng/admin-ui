@@ -48,6 +48,7 @@
 					<div class="ant-upload-text">Upload</div>
 				</div>
 			</a-upload>
+			<span style="color: red;">建议尺寸 100*100</span>
 		</a-form-item>
 
 		<a-form-item
