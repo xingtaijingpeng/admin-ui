@@ -41,7 +41,7 @@
                     {key: 'app', tab: '直播'},
                 ],
                 noTitleKey: 'project',
-                btnview: '添加文章'
+                btnview: '添加视频'
             }
         },
         computed: {
