@@ -76,7 +76,7 @@
 					:headers="authHeader()"
 					@change="handleChangeVideo"
 			>
-				<a-button> <a-icon type="upload" /> Click to Upload </a-button>
+				<a-button> <a-icon type="upload" /> 上传视频 </a-button>
 			</a-upload>
 		</a-form-item>
 
