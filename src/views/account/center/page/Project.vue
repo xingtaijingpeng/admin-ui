@@ -8,7 +8,9 @@
 		>
 			<a-list-item slot="renderItem" slot-scope="item">
 				<a-card class="ant-pro-pages-account-projects-card" hoverable>
-					<img slot="cover" :src="item.cover" :alt="item.title" />
+					<div slot="cover" style="text-align: center; overflow: hidden">
+						<img :src="item.cover" :alt="item.title" height="100%" />
+					</div>
 					<a-card-meta :title="item.title">
 						<template slot="description">
 							<ellipsis :length="50">{{ item.category }}</ellipsis>
