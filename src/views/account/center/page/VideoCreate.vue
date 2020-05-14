@@ -37,6 +37,13 @@
 			/>
 		</a-form-item>
 
+		<a-form-item label="简介">
+			<a-input
+					v-decorator="['description',{initialValue: '',rules: [{ required: true, message: 'Please input your display_name!' }]}]"
+					placeholder="请输入简介"
+			/>
+		</a-form-item>
+
 		<a-form-item
 				label="缩略图"
 		>
