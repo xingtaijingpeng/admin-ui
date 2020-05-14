@@ -32,7 +32,7 @@
 				</transition>
 			</a-layout-content>
 			<a-layout-footer style="text-align: center">
-				<a href="https://www.antdv.com/components/button-cn/" target="_blank">Ant Design ©2018 Created by Ant UED</a>
+				<a>北京图博教育科技有限公司</a>
 			</a-layout-footer>
 		</a-layout>
 	</a-layout>

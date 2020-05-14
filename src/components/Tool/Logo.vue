@@ -11,7 +11,7 @@
         props: {
             title: {
                 type: String,
-                default: 'XT Jing Peng',
+                default: '北京图博教育',
                 required: false
             },
             showTitle: {

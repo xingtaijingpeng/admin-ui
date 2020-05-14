@@ -67,7 +67,7 @@
 		>
 			<a-input
 					v-decorator="['url']"
-					type="hidden"
+					type="text"
 			/>
 			<a-upload
 					name="file"
