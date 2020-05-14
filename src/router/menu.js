@@ -137,11 +137,11 @@ export default [
         component: Tree(),
         children: [
             {
-                path: 'develop', meta: { title: '开发管理'},
+                path: 'develop', meta: { title: '开发管理', hidden: false},
                 component: Tree(),
                 children:[
                     {
-                        path: 'permission', meta: { title: '权限列表', keepAlive: true}, //keepAlive 暂未开发此功能（当前暂无可行方案）
+                        path: 'permission', meta: { title: '权限列表', keepAlive: true, hidden: true}, //keepAlive 暂未开发此功能（当前暂无可行方案）
                         component: Tree(() => import('../views/system/develop/permission/Index.vue')),
                         hideChildrenInMenu: true,
                         children:[
@@ -156,7 +156,7 @@ export default [
                         ]
                     },
                     {
-                        path: 'role', meta: { title: '角色列表'},
+                        path: 'role', meta: { title: '角色列表', hidden: true},
                         component: Tree(() => import('../views/system/develop/role/Index.vue')),
                         hideChildrenInMenu: true,
                         children:[
