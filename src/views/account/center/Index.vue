@@ -40,7 +40,7 @@
                     {key: 'project', tab: '视频'},
                     {key: 'app', tab: '直播'},
                 ],
-                noTitleKey: 'article',
+                noTitleKey: 'project',
                 btnview: '添加文章'
             }
         },
