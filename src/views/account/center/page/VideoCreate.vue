@@ -41,7 +41,7 @@
 				label="缩略图"
 		>
 			<a-input
-					v-decorator="['cover']"
+					v-decorator="['cover',{initialValue: '',rules: [{ required: true, message: '缺少缩略图' }]}]"
 					type="hidden"
 			/>
 			<a-upload
@@ -110,7 +110,7 @@
 					html-type="submit"
 					:disabled="hasErrors(form.getFieldsError())"
 			>
-				Submit
+				提交
 			</a-button>
 		</a-form-item>
 	</a-form>

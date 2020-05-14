@@ -17,7 +17,7 @@
 						</template>
 					</a-card-meta>
 					<div class="cardItemContent">
-						<span>{{ item.created_at | fromNow}}</span>
+						<span>{{ item.created_at}}</span>
 						<div class="avatarList">
 							<span @click="jump('/account/center/video/update/'+item.id)">
 								<a-icon type="edit" style="margin-right: 8px" />编辑

@@ -9,7 +9,8 @@
 			</a-row>
 		</template>
 		<template slot="display_name" slot-scope="data, record">
-			|<span v-for="i in record.level" :key="i"> --- </span> {{data}}
+			<h3 v-if="record.level == 1">{{data}}</h3>
+			<span v-else style="padding-left: 40px;">{{data}}</span>
 		</template>
 		<template slot="is_menu" slot-scope="data">
 			{{data == 1 ? '是' : '否'}}

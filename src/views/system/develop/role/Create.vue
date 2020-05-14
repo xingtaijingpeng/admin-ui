@@ -41,7 +41,7 @@
 					html-type="submit"
 					:disabled="hasErrors(form.getFieldsError())"
 			>
-				Submit
+				提交
 			</a-button>
 		</a-form-item>
 

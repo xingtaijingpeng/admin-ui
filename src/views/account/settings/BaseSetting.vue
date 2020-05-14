@@ -50,7 +50,7 @@
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 12, offset: 3 }">
                 <a-button type="primary" html-type="submit">
-                    Submit
+					提交
                 </a-button>
             </a-form-item>
         </a-form>
