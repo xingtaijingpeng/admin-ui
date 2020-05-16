@@ -73,6 +73,7 @@
         },
         mounted(){
             let _this = this,open = 0,level = 0;
+            window.console.log(this.$route.params.guard);
             axios.post('category/index',{merge:1,guard: this.$route.params.guard}).then((response) => {
                 if(!response.status){
                     return this.$message.error(response.message);

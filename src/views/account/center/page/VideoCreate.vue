@@ -94,14 +94,14 @@
 			</a-radio-group>
 		</a-form-item>
 
-		<a-form-item label="现价">
+		<a-form-item label="班型现价">
 			<a-input
 					v-decorator="['price',{initialValue: '',rules: [{ required: true, message: 'Please input your route_name!' }]}]"
 					placeholder="请输入现价"
 			/>
 		</a-form-item>
 
-		<a-form-item label="原价">
+		<a-form-item label="班型原价">
 			<a-input
 					v-decorator="['old_price',{initialValue: '',rules: [{ required: true, message: 'Please input your route_name!' }]}]"
 					placeholder="请输入原价"
