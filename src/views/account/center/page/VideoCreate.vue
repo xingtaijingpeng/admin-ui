@@ -6,11 +6,11 @@
 			@submit="handleSubmit"
 			class="ant-pro-form-wapper"
 	>
-		<a-divider orientation="left">文章添加/修改</a-divider>
+		<a-divider orientation="left">视频添加/修改</a-divider>
 
 		<a-form-item label="所属分类">
 			<a-select
-					v-decorator="['category_id',{rules: [{ required: true, message: 'Please input your display_name!' }]}]"
+					v-decorator="['category_id',{rules: [{ required: true, message: '请填写!' }]}]"
 					placeholder="请选择所属分类"
 			>
 				<a-select-option v-for="(item,index) in menuTree" :key="index" :value="item.id">
@@ -21,7 +21,7 @@
 
 		<a-form-item label="所属讲师">
 			<a-select
-					v-decorator="['teacher_id',{rules: [{ required: true, message: 'Please input your display_name!' }]}]"
+					v-decorator="['teacher_id',{rules: [{ required: true, message: '请填写!' }]}]"
 					placeholder="请选择讲师"
 			>
 				<a-select-option v-for="(item,index) in teacher" :key="index" :value="item.id">
@@ -32,14 +32,14 @@
 
 		<a-form-item label="标题">
 			<a-input
-					v-decorator="['title',{initialValue: '',rules: [{ required: true, message: 'Please input your display_name!' }]}]"
+					v-decorator="['title',{initialValue: '',rules: [{ required: true, message: '请填写!' }]}]"
 					placeholder="请输入显示名称"
 			/>
 		</a-form-item>
 
 		<a-form-item label="简介">
 			<a-input
-					v-decorator="['description',{initialValue: '',rules: [{ required: true, message: 'Please input your display_name!' }]}]"
+					v-decorator="['description',{initialValue: '',rules: [{ required: true, message: '请填写!' }]}]"
 					placeholder="请输入简介"
 			/>
 		</a-form-item>
