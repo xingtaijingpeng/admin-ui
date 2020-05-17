@@ -10,7 +10,7 @@
 
 		<a-form-item label="所属分类">
 			<a-select
-					v-decorator="['category_id',{rules: [{ required: true, message: 'Please input your display_name!' }]}]"
+					v-decorator="['category_id',{rules: [{ required: true, message: '请填写!' }]}]"
 					placeholder="请选择所属分类"
 			>
 				<a-select-option v-for="(item,index) in menuTree" :key="index" :value="item.id">
@@ -21,14 +21,14 @@
 
 		<a-form-item label="标题1">
 			<a-input
-					v-decorator="['title',{initialValue: '',rules: [{ required: true, message: 'Please input your display_name!' }]}]"
+					v-decorator="['title',{initialValue: '',rules: [{ required: true, message: '请填写!' }]}]"
 					placeholder="请输入显示名称"
 			/>
 		</a-form-item>
 
 		<a-form-item label="描述">
 			<a-input
-					v-decorator="['description',{initialValue: '',rules: [{ required: true, message: 'Please input your route_name!' }]}]"
+					v-decorator="['description',{initialValue: '',rules: [{ required: true, message: '请填写!' }]}]"
 					placeholder="请输入权限名称"
 			/>
 		</a-form-item>
