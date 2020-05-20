@@ -2,7 +2,7 @@
 	<s-table ref="table" :columns="columns" dataUrl="category/index?guard=video&merge=1" :pagination="false">
 		<template slot="title">
 			<a-row type="flex" justify="space-around" align="middle">
-				<a-col :span="8">文章分类</a-col>
+				<a-col :span="8">视频分类</a-col>
 				<a-col :span="16" :style="{ textAlign:'right'}">
 					<a-button type="primary" icon="plus" @click="jump('/account/category/video/create/video')">添加分类</a-button>
 				</a-col>

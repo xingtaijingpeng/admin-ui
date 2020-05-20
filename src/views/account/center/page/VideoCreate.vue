@@ -88,7 +88,7 @@
 		</a-form-item>
 
 		<a-form-item label="热门">
-			<a-radio-group v-decorator="['hot',{ initialValue: 1 }]">
+			<a-radio-group v-decorator="['hot',{ initialValue: 2 }]">
 				<a-radio :value="1">是</a-radio>
 				<a-radio :value="2">否</a-radio>
 			</a-radio-group>
@@ -105,6 +105,13 @@
 			<a-input
 					v-decorator="['old_price',{initialValue: '',rules: [{ required: true, message: 'Please input your route_name!' }]}]"
 					placeholder="请输入原价"
+			/>
+		</a-form-item>
+
+		<a-form-item label="排序">
+			<a-input
+					v-decorator="['sorts',{initialValue: 0}]"
+					placeholder="请输入简介"
 			/>
 		</a-form-item>
 

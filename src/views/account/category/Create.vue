@@ -17,7 +17,7 @@
 					请选择上级模块
 				</a-select-option>
 				<a-select-option v-for="(item,index) in menuTree" :key="index" :value="item.id" :disabled="item.disabled">
-					|<span v-for="(n,i) in item.level" :key="i"> -- </span>{{item.name}}
+					<template v-if="item.level == 1">|<span v-for="(n,i) in item.level" :key="i"> -- </span>{{item.name}}</template>
 				</a-select-option>
 			</a-select>
 		</a-form-item>
