@@ -30,6 +30,14 @@
 			</a-select>
 		</a-form-item>
 
+		<a-form-item label="章节分组">
+			<a-input
+					v-decorator="['zhangjie',{initialValue: '',rules: [{ required: false, message: '请填写!' }]}]"
+					placeholder="请输入章节分组"
+			/>
+		</a-form-item>
+
+
 		<a-form-item label="标题">
 			<a-input
 					v-decorator="['title',{initialValue: '',rules: [{ required: true, message: '请填写!' }]}]"
