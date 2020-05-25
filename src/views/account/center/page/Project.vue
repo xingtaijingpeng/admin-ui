@@ -24,7 +24,7 @@
 					<div slot="cover" style="text-align: center; overflow: hidden; width: 100%;height: 190px;">
 						<img :src="item.cover" :alt="item.title" height="100%" />
 					</div>
-					<a-card-meta :title="item.title">
+					<a-card-meta :title="(item.zhangjie?item.zhangjie:'')+' '+item.title">
 						<template slot="description">
 							<ellipsis :length="50">{{ item.category }}</ellipsis>
 						</template>
