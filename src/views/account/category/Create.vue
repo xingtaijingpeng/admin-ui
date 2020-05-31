@@ -36,6 +36,24 @@
 			</a-radio-group>
 		</a-form-item>
 
+		<a-form-item
+				label="班型资料PDF"
+		>
+			<a-input
+					v-decorator="['zip_url']"
+					type="text"
+			/>
+			<a-upload
+					name="file"
+					:multiple="false"
+					:action="baseUrl('upload/image')"
+					:headers="authHeader()"
+					@change="handleChangeVideo"
+			>
+				<a-button> <a-icon type="upload" /> 上传压缩资料 </a-button>
+			</a-upload>
+		</a-form-item>
+
 		<a-form-item label="排序">
 			<a-input-number v-decorator="['sort', { initialValue: 0 }]" :min="0" :max="99999999" style="width: 100px" />
 			<span class="ant-form-text">
@@ -67,13 +85,14 @@
             },
             formLayout: 'horizontal',
             menuTree: [],
+			guard: 'article'
         }),
         beforeCreate() {
             this.form = this.$form.createForm(this);
         },
         mounted(){
             let _this = this,open = 0,level = 0;
-            window.console.log(this.$route.params.guard);
+            this.guard = this.$route.params.guard;
             axios.post('category/index',{merge:1,guard: this.$route.params.guard}).then((response) => {
                 if(!response.status){
                     return this.$message.error(response.message);
@@ -102,6 +121,12 @@
             }
         },
         methods: {
+			handleChangeVideo({file}){
+
+				if (file.status === 'done') {
+					this.form.setFieldsValue({zip_url:file.response.data});
+				}
+			},
             handleSubmit(e) {
                 e.preventDefault();
 
