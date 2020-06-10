@@ -19,7 +19,7 @@
 			{{data == 1 ? '正常' : '停止'}}
 		</template>
 		<template slot="operation" slot-scope="data, record">
-			<a @click="jump('/account/category/article/update/video/'+record.id)">编辑</a>
+			<a @click="jump('/account/category/video/update/video/'+record.id)">编辑</a>
 			<a-divider type="vertical" />
 			<a-popconfirm
 					title="Sure to delete?"
