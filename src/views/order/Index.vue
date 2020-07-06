@@ -25,6 +25,7 @@
                     {title: '支付方式', dataIndex: 'pay_type'},
                     {title: '购买者信息', dataIndex: 'user.name'},
                     {title: '购买者电话', dataIndex: 'user.mobile'},
+                    {title: '购买者地址', dataIndex: 'user.address'},
                     {title: '视频名称', dataIndex: 'good_name'},
                     {title: '订单金额', dataIndex: 'price'},
                     {title: '支付时间', dataIndex: 'payed_at'},

@@ -52,6 +52,9 @@
                     {title: 'ID', dataIndex: 'id'},
                     {title: '状态', dataIndex: 'mobile'},
                     {title: '名称', dataIndex: 'name'},
+                    {title: '真实姓名', dataIndex: 'real_name'},
+                    {title: '身份证', dataIndex: 'real_num'},
+                    {title: '收货地址', dataIndex: 'address'},
                     {title: '注册时间', dataIndex: 'created_at'},
                     {title: '操作', dataIndex: 'operation', width: 150, scopedSlots: { customRender: 'operation' },}
                 ],
