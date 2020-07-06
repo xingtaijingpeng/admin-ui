@@ -51,6 +51,8 @@
                         return this.$message.error(response.message);
                     }
                     sessionStorage.setItem('access_token',response.data.token)
+                    sessionStorage.setItem('role',JSON.stringify(response.data.role))
+                    sessionStorage.setItem('user',JSON.stringify(response.data.user))
                     this.jump('/')
 
                 });

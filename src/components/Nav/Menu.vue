@@ -64,14 +64,17 @@
                     this.openKeys = this.openKeys.filter(item => item.search(data.key))
                 }
             },
-            renderItem (menu,path = '') {
+            renderItem (menu,path = '',roleinfo) {
                 return menu.map(item => {
                     const uri = path+(path?'/':'')+item.path;
+                    if(path == '' && roleinfo.id == 3 && (item.meta.title != '工作台' && item.meta.title != '平台')){
+                        return  null;
+                    }
                     if(item.children && !item.hideChildrenInMenu){
                         return !item.meta.hidden ? (
                             <a-sub-menu key={uri} onTitleClick={this.titleClick}>
                                 <span slot="title">{item.meta.icon ? <a-icon type={item.meta.icon} /> : ''}<span>{item.meta.title}</span></span>
-                                {this.renderItem(item.children,uri)}
+                                {this.renderItem(item.children,uri,roleinfo)}
                             </a-sub-menu>
                         ):null;
                     }else{
@@ -114,7 +117,9 @@
                 }
             }
 
-            const menuTree = this.renderItem(this.menu);
+            let roleinfo = JSON.parse(sessionStorage.getItem('role'));
+
+            const menuTree = this.renderItem(this.menu,'',roleinfo);
 
             return (<a-menu {...dynamicProps}>{menuTree}</a-menu>)
         }
